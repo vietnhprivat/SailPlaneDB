@@ -124,8 +124,8 @@ CREATE TABLE IF NOT EXISTS MemberOwnsPlane (
 
 DROP VIEW IF EXISTS StudentFlights;
 CREATE VIEW StudentFlights AS 
-SELECT * FROM Members JOIN Flight ON Members.MemberID = Flight.SecondaryPilotID HAVING Members.MembershipType='Student';
+SELECT * FROM Members JOIN Flight ON Members.MemberID = Flight.SecondaryPilotID WHERE Members.MembershipType='Student';
 SELECT * FROM StudentFlights;
 
 SELECT * FROM Exercise JOIN StudentFlights ON Exercise.FlightID = StudentFlights.FlightID;
-SELECT StartAirfieldName, Count(FlightID) as 'Number of flights' FROM Flight WHERE StartDateTime > NOW() - INTERVAL 1 MONTH GROUP BY StartAirfieldName; 
+SELECT StartAirfieldName, Count(FlightID) as 'Number of flights' FROM Flight WHERE StartDateTime > NOW() - INTERVAL 1 MONTH GROUP BY StartAirfieldName HAVING Count(FlightID) < 3; 
