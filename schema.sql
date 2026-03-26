@@ -1,10 +1,21 @@
 -- SailPlane Database Schema
 
-CREATE DATABASE IF NOT EXISTS sailplane;
+CREATE DATABASE IF NOT EXISTS SailPlane;
+USE SailPlane;
+
+DROP TABLE IF EXISTS MemberOwnsPlane;
+DROP TABLE IF EXISTS ClubOwnsPlane;
+DROP TABLE IF EXISTS Theory;
+DROP TABLE IF EXISTS Exercise;
+DROP TABLE IF EXISTS Flight;
+DROP TABLE IF EXISTS Plane;
+DROP TABLE IF EXISTS Members;
+DROP TABLE IF EXISTS Club;
+DROP TABLE IF EXISTS Airfield;
 
 CREATE TABLE IF NOT EXISTS Airfield (
     AirfieldName     VARCHAR(50)  NOT NULL,
-    AirfieldAddress          VARCHAR(50),
+    AirfieldAddress  VARCHAR(50),
     RunwayMaterial   VARCHAR(30),
     RunwayLength     INT,
     RunwayDirection  VARCHAR(20),
@@ -19,14 +30,14 @@ CREATE TABLE IF NOT EXISTS Club (
         ON UPDATE CASCADE
 );
 
-CREATE TABLE IF NOT EXISTS Member (
+CREATE TABLE IF NOT EXISTS Members (
     MemberID         INT AUTO_INCREMENT NOT NULL,
     MemberName       VARCHAR(50),
     MembershipType   ENUM('Student', 'Solo', 'S-pilot', 'Instructor'),
     State		     BOOLEAN,
-    FlightclubName   VARCHAR(50) NOT NULL,
+    ClubName   VARCHAR(50) NOT NULL,
     PRIMARY KEY (MemberID),
-    FOREIGN KEY (FlightclubName) REFERENCES Club(ClubName)
+    FOREIGN KEY (ClubName) REFERENCES Club(ClubName)
         ON UPDATE CASCADE
 );
 
@@ -48,9 +59,9 @@ CREATE TABLE IF NOT EXISTS Flight (
     StopDateTime       DATETIME,
     PlaneRegistration  CHAR(6) NOT NULL,
     PRIMARY KEY (FlightID),
-    FOREIGN KEY (PilotInCommandID) REFERENCES Member(MemberID)
+    FOREIGN KEY (PilotInCommandID) REFERENCES Members(MemberID)
         ON UPDATE CASCADE,
-    FOREIGN KEY (SecondaryPilotID) REFERENCES Member(MemberID)
+    FOREIGN KEY (SecondaryPilotID) REFERENCES Members(MemberID)
         ON DELETE SET NULL
         ON UPDATE CASCADE,
     FOREIGN KEY (StartAirfieldName) REFERENCES Airfield(AirfieldName)
@@ -71,9 +82,9 @@ CREATE TABLE IF NOT EXISTS Exercise (
     FOREIGN KEY (FlightID) REFERENCES Flight(FlightID)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
-    FOREIGN KEY (StudentPilotID) REFERENCES Member(MemberID)
+    FOREIGN KEY (StudentPilotID) REFERENCES Members(MemberID)
         ON UPDATE CASCADE,
-    FOREIGN KEY (InstructorID) REFERENCES Member(MemberID)
+    FOREIGN KEY (InstructorID) REFERENCES Members(MemberID)
         ON UPDATE CASCADE
 );
 
@@ -84,7 +95,7 @@ CREATE TABLE IF NOT EXISTS Theory (
     Exam               BOOLEAN,
     ExamDate           DATE,
     PRIMARY KEY (MemberID, Course),
-    FOREIGN KEY (MemberID) REFERENCES Member(MemberID)
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
@@ -92,7 +103,7 @@ CREATE TABLE IF NOT EXISTS Theory (
 CREATE TABLE IF NOT EXISTS ClubOwnsPlane (
     ClubName           VARCHAR(50)  NOT NULL,
     PlaneRegistration  CHAR(6)  NOT NULL,
-    OwnershipShare     DECIMAL(4,2) CHECK (Share >= 0 AND Share <= 1),
+    OwnershipShare     DECIMAL(4,2) CHECK (OwnershipShare >= 0 AND OwnershipShare <= 1),
     PRIMARY KEY (ClubName, PlaneRegistration),
     FOREIGN KEY (ClubName) REFERENCES Club(ClubName)
         ON DELETE CASCADE
@@ -103,11 +114,11 @@ CREATE TABLE IF NOT EXISTS ClubOwnsPlane (
 );
 
 CREATE TABLE IF NOT EXISTS MemberOwnsPlane (
-    MemberID           CHAR(8)  NOT NULL,
+    MemberID           INT NOT NULL,
     PlaneRegistration  CHAR(6) NOT NULL,
-    OwnershipShare     DECIMAL(4,2) CHECK (Share >= 0 AND Share <= 1),
+    OwnershipShare     DECIMAL(4,2) CHECK (OwnershipShare >= 0 AND OwnershipShare <= 1),
     PRIMARY KEY (MemberID, PlaneRegistration),
-    FOREIGN KEY (MemberID) REFERENCES Member(MemberID)
+    FOREIGN KEY (MemberID) REFERENCES Members(MemberID)
         ON DELETE CASCADE
         ON UPDATE CASCADE,
     FOREIGN KEY (PlaneRegistration) REFERENCES Plane(Registration)
