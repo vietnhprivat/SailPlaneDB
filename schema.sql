@@ -90,7 +90,8 @@ CREATE TABLE IF NOT EXISTS Exercise (
 
 CREATE TABLE IF NOT EXISTS Theory (
     MemberID           INT NOT NULL,
-    Course             INT NOT NULL,
+    Course             ENUM('Luftfartsret', 'Menneskelig præstationsevne', 'Meteorologi', 'Kommunikation', 'Flyveprincipper', 'Operationelle procedurer', 
+    'Flyvepræstationer og planlægning', 'Generel viden om luftfartøjer', 'Navigation'),
     EligibilityTest    BOOLEAN,
     Exam               BOOLEAN,
     ExamDate           DATE,
