@@ -75,16 +75,10 @@ CREATE TABLE IF NOT EXISTS Flight (
 CREATE TABLE IF NOT EXISTS Exercise (
     FlightID         INT NOT NULL,
     ExerciseType     VARCHAR(3),
-    StudentPilotID   INT NOT NULL,
     Grade            ENUM('1', '2', '3'),
-    InstructorID     INT NOT NULL,
     PRIMARY KEY (FlightID),
     FOREIGN KEY (FlightID) REFERENCES Flight(FlightID)
         ON DELETE CASCADE
-        ON UPDATE CASCADE,
-    FOREIGN KEY (StudentPilotID) REFERENCES Members(MemberID)
-        ON UPDATE CASCADE,
-    FOREIGN KEY (InstructorID) REFERENCES Members(MemberID)
         ON UPDATE CASCADE
 );
 
@@ -127,7 +121,10 @@ CREATE TABLE IF NOT EXISTS MemberOwnsPlane (
 );
 
 
+DROP VIEW IF EXISTS StudentFlights;
 CREATE VIEW StudentFlights AS 
 SELECT * FROM Members JOIN Flight ON Members.MemberID = Flight.SecondaryPilotID HAVING Members.MembershipType='Student';
-
 SELECT * FROM StudentFlights;
+
+SELECT * FROM Exercise JOIN StudentFlights ON Exercise.FlightID = StudentFlights.FlightID;
+SELECT StartAirfieldName, Count(FlightID) as 'Number of flights' FROM Flight WHERE StartDateTime > NOW() - INTERVAL 1 MONTH GROUP BY StartAirfieldName; 
