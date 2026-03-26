@@ -4,7 +4,7 @@ CREATE DATABASE IF NOT EXISTS sailplane;
 
 CREATE TABLE IF NOT EXISTS Airfield (
     AirfieldName     VARCHAR(50)  NOT NULL,
-    Address          VARCHAR(50),
+    AirfieldAddress          VARCHAR(50),
     RunwayMaterial   VARCHAR(30),
     RunwayLength     INT,
     RunwayDirection  VARCHAR(20),
