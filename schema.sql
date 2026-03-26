@@ -125,3 +125,9 @@ CREATE TABLE IF NOT EXISTS MemberOwnsPlane (
         ON DELETE CASCADE
         ON UPDATE CASCADE
 );
+
+
+CREATE VIEW StudentFlights AS 
+SELECT * FROM Members JOIN Flight ON Members.MemberID = Flight.SecondaryPilotID HAVING Members.MembershipType='Student';
+
+SELECT * FROM StudentFlights;
