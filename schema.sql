@@ -129,3 +129,33 @@ SELECT * FROM StudentFlights;
 
 SELECT * FROM Exercise JOIN StudentFlights ON Exercise.FlightID = StudentFlights.FlightID;
 SELECT StartAirfieldName, Count(FlightID) as 'Number of flights' FROM Flight WHERE StartDateTime > NOW() - INTERVAL 1 MONTH GROUP BY StartAirfieldName HAVING Count(FlightID) < 3; 
+
+DROP PROCEDURE IF EXISTS UpdateMemberTheoryExamAfterExpiration;
+DELIMITER //
+CREATE PROCEDURE UpdateMemberTheoryExamAfterExpiration(IN PilotID INT)
+BEGIN
+    SET @ExamsPassed = 0;
+    SELECT COUNT(Exam) INTO @ExamsPassed FROM Theory WHERE MemberID = PilotID AND Exam = 1;
+    
+    IF @ExamsPassed = 9 THEN
+		SET @NewestExamPassed = "2000-01-01";
+        SELECT MAX(ExamDate) INTO @NewestExamPassed FROM Theory WHERE MemberID = PilotID AND Exam = 1;
+        IF @NewestExamPassed < NOW() - INTERVAL 2 YEAR THEN
+			UPDATE Theory SET Exam=FALSE, ExamDate=NULL WHERE MemberID = PilotID;
+        END IF;
+	ELSE
+		Set @OldestExamPassed = "2000-01-01";
+		SELECT MIN(ExamDate) INTO @OldestExamPassed FROM Theory WHERE MemberID = PilotID AND Exam = 1;
+		IF @OldestExamPassed < NOW() - INTERVAL 18 MONTH THEN
+			UPDATE Theory SET Exam=FALSE, ExamDate=NULL WHERE MemberID = PilotID;
+		END IF;
+    END IF;
+END; //
+DELIMITER ;
+
+SELECT * FROM Theory;
+CALL UpdateMemberTheoryExamAfterExpiration(2); # Newest exam more than 2 years old
+SELECT * FROM Theory;
+CALL UpdateMemberTheoryExamAfterExpiration(1); # Oldest exam more than 18 months old and not all passed
+CALL UpdateMemberTheoryExamAfterExpiration(3); # Newly passed exam, shouldn't reset
+SELECT * FROM Theory;

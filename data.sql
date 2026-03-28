@@ -53,5 +53,15 @@ INSERT INTO Exercise (FlightID, ExerciseType, Grade) VALUES
 
 INSERT INTO Theory (MemberID, Course, EligibilityTest, Exam, ExamDate) VALUES
 (1, 'Luftfartsret', TRUE, FALSE, NULL),
-(1, 'Meteorologi', TRUE, TRUE, '2026-03-26'),
-(3, 'Navigation', TRUE, FALSE, NULL);
+(1, 'Meteorologi', TRUE, TRUE, '2024-03-26'),
+(1, 'Navigation', TRUE, TRUE, '2024-03-26'),
+(2, 'Meteorologi', TRUE, TRUE, '2023-03-26'),
+(2, 'Luftfartsret', TRUE, TRUE, '2023-03-27'),
+(2, 'Navigation', TRUE, TRUE, '2023-03-26'),
+(2, 'Menneskelig præstationsevne', TRUE, TRUE, '2023-03-27'),
+(2, 'Kommunikation', TRUE, TRUE, '2023-03-26'),
+(2, 'Flyveprincipper', TRUE, TRUE, '2023-03-27'),
+(2, 'Operationelle procedurer', TRUE, TRUE, '2023-03-26'),
+(2, 'Flyvepræstationer og planlægning', TRUE, TRUE, '2023-03-26'),
+(2, 'Generel viden om luftfartøjer', TRUE, TRUE, '2023-03-27'),
+(3, 'Luftfartsret', TRUE, TRUE, '2026-03-26');
