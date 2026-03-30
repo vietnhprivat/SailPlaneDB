@@ -159,3 +159,33 @@ SELECT * FROM Theory;
 CALL UpdateMemberTheoryExamAfterExpiration(1); # Oldest exam more than 18 months old and not all passed
 CALL UpdateMemberTheoryExamAfterExpiration(3); # Newly passed exam, shouldn't reset
 SELECT * FROM Theory;
+
+
+DROP FUNCTION IF EXISTS GetMemberTotalFlightHours;
+DELIMITER //
+CREATE FUNCTION GetMemberTotalFlightHours (vMemberID INT) RETURNS DECIMAL(8,2)
+BEGIN
+    DECLARE vTotalMinutes INT;
+    SELECT COALESCE(SUM(TIMESTAMPDIFF(MINUTE, StartDateTime, StopDateTime)), 0)
+    INTO vTotalMinutes
+    FROM Flight
+    WHERE PilotInCommandID = vMemberID OR SecondaryPilotID = vMemberID;
+    RETURN ROUND(vTotalMinutes / 60.0, 2);
+END//
+DELIMITER ;
+
+# Get flight hours for a specific member
+SELECT GetMemberTotalFlightHours(1);
+
+# Get flight hours for all members
+SELECT MemberID, MemberName, GetMemberTotalFlightHours(MemberID) AS TotalFlightHours
+FROM Members;
+
+# Find all members with more than 2 flight hours
+SELECT MemberID, MemberName, GetMemberTotalFlightHours(MemberID) AS TotalFlightHours
+FROM Members
+WHERE GetMemberTotalFlightHours(MemberID) > 2;
+
+
+
+
