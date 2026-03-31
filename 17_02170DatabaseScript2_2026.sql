@@ -14,17 +14,17 @@ END//
 DELIMITER ;
 
 -- Testing function
-# Get flight hours for a specific member
+# 1. Get flight hours for a specific member
 SELECT GetMemberTotalFlightHours(1);
 
-# Get flight hours for all members
+# 2. Get flight hours for all members
 SELECT MemberID, MemberName, GetMemberTotalFlightHours(MemberID) AS TotalFlightHours
 FROM Members;
 
-# Find all members with more than 2 flight hours
+# 3. Find all members with more than 1 flight hour
 SELECT MemberID, MemberName, GetMemberTotalFlightHours(MemberID) AS TotalFlightHours
 FROM Members
-WHERE GetMemberTotalFlightHours(MemberID) > 2;
+WHERE GetMemberTotalFlightHours(MemberID) > 1;
 
 -- 7.2 Trigger
 DROP TRIGGER IF EXISTS StudentTheoryInit;
