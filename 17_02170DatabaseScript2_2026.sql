@@ -1,3 +1,9 @@
+-- 6.3 IN
+SELECT Registration, PlaneType FROM Plane
+WHERE Registration NOT IN (
+SELECT PlaneRegistration FROM Flight
+);
+
 -- 7.1 Function
 DROP FUNCTION IF EXISTS GetMemberTotalFlightHours;
 DELIMITER //
