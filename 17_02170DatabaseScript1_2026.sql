@@ -176,8 +176,7 @@ INSERT INTO Flight (FlightID, PilotInCommandID, SecondaryPilotID, StartAirfieldN
 INSERT INTO Exercise (FlightID, ExerciseType, Grade) VALUES
 (1, 'A01', '2'),
 (2, 'B02', '3'),
-(5, 'C03', '1'),
-(6, 'D04', '2');
+(5, 'C03', '1');
 
 INSERT INTO Theory (MemberID, Course, EligibilityTest, Exam, ExamDate) VALUES
 (1, 'Luftfartsret', TRUE, FALSE, NULL),
