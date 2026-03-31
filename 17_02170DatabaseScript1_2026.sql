@@ -121,11 +121,6 @@ CREATE TABLE IF NOT EXISTS MemberOwnsPlane (
         ON UPDATE CASCADE
 );
 
-DROP VIEW IF EXISTS StudentFlights;
-CREATE VIEW StudentFlights AS 
-SELECT * FROM Members JOIN Flight ON Members.MemberID = Flight.SecondaryPilotID WHERE Members.MembershipType='Student';
-SELECT * FROM StudentFlights;
-
 -- 5. Populate tables
 INSERT INTO Airfield (AirfieldName, AirfieldAddress, RunwayMaterial, RunwayLength, RunwayDirection) VALUES
 ('Kalundborg Flyveplads', 'Eskebjergvej 101', 'Grass', 699, '09/27'),
@@ -205,3 +200,9 @@ SELECT * FROM Exercise;
 SELECT * FROM Theory;
 SELECT * FROM ClubOwnsPlane;
 SELECT * FROM MemberOwnsPlane;
+
+# Create view
+DROP VIEW IF EXISTS StudentFlights;
+CREATE VIEW StudentFlights AS 
+SELECT * FROM Members JOIN Flight ON Members.MemberID = Flight.SecondaryPilotID WHERE Members.MembershipType='Student';
+SELECT * FROM StudentFlights;
