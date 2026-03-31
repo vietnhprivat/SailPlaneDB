@@ -1,3 +1,5 @@
+--6.2 UNION
+
 -- 6.3 IN
 SELECT Registration, PlaneType FROM Plane
 WHERE Registration NOT IN (
