@@ -12,6 +12,7 @@ DROP TABLE IF EXISTS Plane;
 DROP TABLE IF EXISTS Members;
 DROP TABLE IF EXISTS Club;
 DROP TABLE IF EXISTS Airfield;
+DROP VIEW IF EXISTS StudentFlights;
 
 CREATE TABLE IF NOT EXISTS Airfield (
     AirfieldName     VARCHAR(50)  NOT NULL,
@@ -121,6 +122,9 @@ CREATE TABLE IF NOT EXISTS MemberOwnsPlane (
         ON UPDATE CASCADE
 );
 
+CREATE VIEW StudentFlights AS 
+SELECT * FROM Members JOIN Flight ON Members.MemberID = Flight.SecondaryPilotID WHERE Members.MembershipType='Student';
+
 -- 5. Populate tables
 INSERT INTO Airfield (AirfieldName, AirfieldAddress, RunwayMaterial, RunwayLength, RunwayDirection) VALUES
 ('Kalundborg Flyveplads', 'Eskebjergvej 101', 'Grass', 699, '09/27'),
@@ -190,19 +194,16 @@ INSERT INTO Theory (MemberID, Course, EligibilityTest, Exam, ExamDate) VALUES
 (2, 'Generel viden om luftfartøjer', TRUE, TRUE, '2023-03-27'),
 (3, 'Luftfartsret', TRUE, TRUE, '2026-03-26');
 
-# View all tables
-SELECT * FROM Airfield;
-SELECT * FROM Club;
-SELECT * FROM Members;
-SELECT * FROM Plane;
-SELECT * FROM Flight;
+# Select all tables
+SELECT * FROM Airfield; 
+SELECT * FROM Club; 
+SELECT * FROM Members; 
+SELECT * FROM Plane; 
+SELECT * FROM Flight; 
 SELECT * FROM Exercise;
 SELECT * FROM Theory;
-SELECT * FROM ClubOwnsPlane;
-SELECT * FROM MemberOwnsPlane;
+SELECT * FROM ClubOwnsPlane; 
+SELECT * FROM MemberOwnsPlane; 
 
-# Create view
-DROP VIEW IF EXISTS StudentFlights;
-CREATE VIEW StudentFlights AS 
-SELECT * FROM Members JOIN Flight ON Members.MemberID = Flight.SecondaryPilotID WHERE Members.MembershipType='Student';
+# Select view
 SELECT * FROM StudentFlights;
