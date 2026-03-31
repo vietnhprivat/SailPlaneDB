@@ -145,7 +145,7 @@ INSERT INTO Members (MemberID, MemberName, MembershipType, State, ClubName) VALU
 (4, 'Zilas Aarestrup', 'Instructor', TRUE, 'Herning Svæveflyveklub'),
 (5, 'Mads Sørensen', 'Solo', TRUE, 'Herning Svæveflyveklub'),
 (6, 'Freja Holme', 'S-pilot', TRUE, 'Ringkøbing Svæveflyveklub'),
-(7, 'Aisha Khan', 'Solo', TRUE, 'Nordsjællands Svæveflyveklub'),
+(7, 'Aisha Khan', 'S-pilot', TRUE, 'Nordsjællands Svæveflyveklub'),
 (8, 'Lars Rørbek', 'S-pilot', FALSE, 'Polyteknisk flyvegruppe');
 
 INSERT INTO Plane (Registration, PlaneType, FlightHours, CompetitionNumber) VALUES
@@ -168,7 +168,7 @@ INSERT INTO MemberOwnsPlane (MemberID, PlaneRegistration, OwnershipShare) VALUES
 INSERT INTO Flight (FlightID, PilotInCommandID, SecondaryPilotID, StartAirfieldName, EndAirfieldName, StartDateTime, StopDateTime, PlaneRegistration) VALUES
 (1, 2, 1, 'Kalundborg Flyveplads', 'Kalundborg Flyveplads', '2026-03-10 09:15:00', '2026-03-10 09:42:00', 'OY-X11'),
 (2, 4, 3, 'Arnborg Flyveplads', 'Arnborg Flyveplads', '2026-03-11 10:00:00', '2026-03-11 10:36:00', 'OY-X22'),
-(3, 6, NULL, 'Stauning Lufthavn', 'Stauning Lufthavn', '2026-03-12 13:20:00', '2026-03-12 14:05:00', 'OY-X55'),
+(3, 7, NULL, 'Stauning Lufthavn', 'Stauning Lufthavn', '2026-03-12 13:20:00', '2026-03-12 14:05:00', 'OY-X55'),
 (4, 5, NULL, 'Arnborg Flyveplads', 'Arnborg Flyveplads', '2026-03-13 11:00:00', '2026-03-13 11:28:00', 'OY-X22'),
 (5, 2, 1, 'Kalundborg Flyveplads', 'Kalundborg Flyveplads', '2026-03-15 14:10:00', '2026-03-15 14:48:00', 'OY-X11'),
 (6, 4, 3, 'Arnborg Flyveplads', 'Arnborg Flyveplads', '2026-03-16 15:30:00', '2026-03-16 16:02:00', 'OY-X22');
