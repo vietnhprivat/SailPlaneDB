@@ -157,7 +157,7 @@ SELECT * FROM Theory;
 CALL UpdateMemberTheoryExamAfterExpiration(2); # Newest exam more than 2 years old
 SELECT * FROM Theory;
 CALL UpdateMemberTheoryExamAfterExpiration(1); # Oldest exam more than 18 months old and not all passed
-CALL UpdateMemberTheoryExamAfterExpiration(3); # Newly passed exam, shouldn't reset
+CALL UpdateMemberTheoryExamAfterExpiration(3); # Newly passed exam, should not reset
 SELECT * FROM Theory;
 
 
