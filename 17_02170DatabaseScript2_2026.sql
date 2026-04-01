@@ -1,6 +1,15 @@
---6.2 UNION
+-- 6.1 JOIN
+SELECT * FROM Members 
+JOIN Flight ON Members.MemberID = Flight.SecondaryPilotID 
+WHERE Members.MembershipType='Student';
 
--- 6.3 IN
+-- 6.2 GROUP BY/HAVING
+SELECT StartAirfieldName, Count(FlightID) as 'Number of flights' FROM Flight 
+WHERE StartDateTime > NOW() - INTERVAL 1 MONTH 
+GROUP BY StartAirfieldName 
+HAVING Count(FlightID) < 3; 
+
+-- 6.3 NOT IN
 SELECT Registration, PlaneType FROM Plane
 WHERE Registration NOT IN (
 SELECT PlaneRegistration FROM Flight
